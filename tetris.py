@@ -1,5 +1,6 @@
-import sys
 import random
+import sys
+
 import pygame
 from pygame import Rect
 
@@ -20,7 +21,7 @@ SHADOW = (120, 120, 120)
 # Tetrimino definitions (4x4) and colors
 # Using SRS-like shapes (no full wall kicks, but simple shifts)
 TETROMINOES = {
-    'I': [
+    "I": [
         [
             [0, 0, 0, 0],
             [1, 1, 1, 1],
@@ -34,7 +35,7 @@ TETROMINOES = {
             [0, 0, 1, 0],
         ],
     ],
-    'J': [
+    "J": [
         [
             [1, 0, 0],
             [1, 1, 1],
@@ -56,7 +57,7 @@ TETROMINOES = {
             [1, 1, 0],
         ],
     ],
-    'L': [
+    "L": [
         [
             [0, 0, 1],
             [1, 1, 1],
@@ -78,13 +79,13 @@ TETROMINOES = {
             [0, 1, 0],
         ],
     ],
-    'O': [
+    "O": [
         [
             [1, 1],
             [1, 1],
         ],
     ],
-    'S': [
+    "S": [
         [
             [0, 1, 1],
             [1, 1, 0],
@@ -96,7 +97,7 @@ TETROMINOES = {
             [0, 0, 1],
         ],
     ],
-    'T': [
+    "T": [
         [
             [0, 1, 0],
             [1, 1, 1],
@@ -118,7 +119,7 @@ TETROMINOES = {
             [0, 1, 0],
         ],
     ],
-    'Z': [
+    "Z": [
         [
             [1, 1, 0],
             [0, 1, 1],
@@ -133,13 +134,13 @@ TETROMINOES = {
 }
 
 COLORS = {
-    'I': (0, 186, 249),
-    'J': (0, 101, 189),
-    'L': (255, 140, 0),
-    'O': (255, 213, 0),
-    'S': (120, 190, 33),
-    'T': (149, 45, 137),
-    'Z': (226, 37, 48),
+    "I": (0, 186, 249),
+    "J": (0, 101, 189),
+    "L": (255, 140, 0),
+    "O": (255, 213, 0),
+    "S": (120, 190, 33),
+    "T": (149, 45, 137),
+    "Z": (226, 37, 48),
 }
 
 
@@ -150,6 +151,7 @@ def rotate_matrix(mat):
 
 class Piece:
     """Represent a falling tetromino piece."""
+
     def __init__(self, kind: str):
         self.kind = kind
         self.color = COLORS[kind]
@@ -175,7 +177,9 @@ class Piece:
         return self.rotations[self.rotation % len(self.rotations)]
 
     def cells(self, at_x=None, at_y=None, rot=None):
-        mat = self.rotations[(rot if rot is not None else self.rotation) % len(self.rotations)]
+        mat = self.rotations[
+            (rot if rot is not None else self.rotation) % len(self.rotations)
+        ]
         x0 = self.x if at_x is None else at_x
         y0 = self.y if at_y is None else at_y
         for r, row in enumerate(mat):
@@ -194,6 +198,7 @@ class Piece:
 
 class Board:
     """Game board state and logic: collision, lock, clearing, ghost."""
+
     def __init__(self):
         # grid[r][c] is color or None
         self.grid = [[None for _ in range(COLS)] for _ in range(ROWS)]
